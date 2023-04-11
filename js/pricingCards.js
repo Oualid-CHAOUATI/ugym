@@ -134,7 +134,6 @@ class PricingCardBuilder {
 
 Promise.all([svgCheck, svgUncheck, svgStar]).then(
   ([svgCheck, svgUncheck, svgStar]) => {
- 
     svgCheckResolved = svgCheck;
     svgUncheckResolved = svgUncheck;
     svgStarResolved = svgStar;
