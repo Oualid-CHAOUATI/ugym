@@ -6,7 +6,7 @@
   }
 
   function handler(entry) {
-
+    console.log(entry);
     const target = entry.target;
     const id = target.id;
     const { isIntersecting } = entry;
@@ -22,13 +22,13 @@
 
       target.classList.add("intersected");
     }
-
-
-  
+    // if()
+    console.log(target.id);
+    console.log(isIntersecting);
   }
 
   const elements = document.querySelectorAll(".watch");
-
+  console.log("elements to watch " + elements);
 
   const observer = new IntersectionObserver(callback, {
     rootMargin: "0% 0% -200px 0%",

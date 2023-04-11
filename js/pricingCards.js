@@ -19,7 +19,6 @@ const pricingCardsArray = [
     points: "*",
   },
 ];
-
 const properties = [
   "5 days in a week",
   "1 sweatshirt",
@@ -28,25 +27,26 @@ const properties = [
   "Muscle stretching",
 ];
 
-const baseURL = "../assets/svg/pricing-card-svgs/";
+const svgCheck = `<svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M27 13.2714V14.4674C26.9984 17.2707 26.0906 19.9985 24.4121 22.2438C22.7336 24.4891 20.3743 26.1316 17.686 26.9265C14.9977 27.7213 12.1244 27.6259 9.49481 26.6544C6.86518 25.6828 4.62005 23.8873 3.09425 21.5356C1.56845 19.1838 0.843729 16.4019 1.02818 13.6046C1.21263 10.8073 2.29637 8.14462 4.11776 6.0136C5.93916 3.88257 8.40062 2.3974 11.135 1.77959C13.8695 1.16178 16.7303 1.44444 19.291 2.5854" stroke="#F2E308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M27 4.06714L14 17.0801L10.1 13.1801" stroke="#F2E308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
 
-const svgCheck = fetch(baseURL + `checked.svg`).then((response) =>
-  response.text()
-);
-
-const svgUncheck = fetch(baseURL + `unchecked.svg`).then((response) =>
-  response.text()
-);
-
-const svgStar = fetch(baseURL + `star.svg`).then((response) => response.text());
+const svgUncheck = `<svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M14 27.46C21.1797 27.46 27 21.6397 27 14.46C27 7.28026 21.1797 1.45996 14 1.45996C6.8203 1.45996 1 7.28026 1 14.46C1 21.6397 6.8203 27.46 14 27.46Z" stroke="#E21C28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.9 10.5601L10.1 18.3601" stroke="#E21C28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.1 10.5601L17.9 18.3601" stroke="#E21C28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+const svgStar = `<svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.5 0.459961L16.6432 10.1337H26.8148L18.5858 16.1124L21.729 25.7862L13.5 19.8075L5.27101 25.7862L8.4142 16.1124L0.185208 10.1337H10.3568L13.5 0.459961Z" fill="#F2E308"/>
+</svg>
+`;
 
 const pricingCardsWrapper = document.querySelector(
   ".pricing-section .cards-wrapper"
 );
 
-let svgCheckResolved = svgCheck;
-let svgUncheckResolved = svgUncheck;
-let svgStarResolved = svgStar;
 class PricingCardBuilder {
   constructor({ stars, title, price, points, className = "" }) {
     const card = document.createElement("div");
@@ -55,9 +55,7 @@ class PricingCardBuilder {
     card.appendChild(this.buildStars(stars));
     card.appendChild(this.buildTitle(title));
     card.appendChild(this.buildPrice(price));
-
-    const x = this.buildProperies(points);
-    card.appendChild(x);
+    card.appendChild(this.buildProperies(points));
     card.appendChild(this.buildButton());
     this.card = card;
   }
@@ -72,7 +70,7 @@ class PricingCardBuilder {
 
     const starWrapper = document.createElement("div");
     starWrapper.className = "star-wrapper";
-    starWrapper.innerHTML = svgStarResolved;
+    starWrapper.innerHTML = svgStar;
 
     for (let i = 1; i <= stars; i++)
       div.appendChild(starWrapper.cloneNode(true));
@@ -92,8 +90,7 @@ class PricingCardBuilder {
   }
   buildProperty({ propertyString, propertyRank }, cardPoints) {
     if (cardPoints == "*") cardPoints = properties.length;
-    const svg =
-      propertyRank < cardPoints ? svgCheckResolved : svgUncheckResolved;
+    const svg = propertyRank < cardPoints ? svgCheck : svgUncheck;
     const propertyElement = document.createElement("p");
     if (svg == svgUncheck) propertyElement.className += "disabled";
     propertyElement.innerHTML = propertyString;
@@ -101,7 +98,6 @@ class PricingCardBuilder {
     const div = document.createElement("div");
     div.className = "property-wrapper";
 
-    // fe
     div.innerHTML = svg;
     div.appendChild(propertyElement);
 
@@ -132,15 +128,7 @@ class PricingCardBuilder {
   }
 }
 
-Promise.all([svgCheck, svgUncheck, svgStar]).then(
-  ([svgCheck, svgUncheck, svgStar]) => {
-    svgCheckResolved = svgCheck;
-    svgUncheckResolved = svgUncheck;
-    svgStarResolved = svgStar;
-
-    for (let i = 0; i < pricingCardsArray.length; i++) {
-      const builder = new PricingCardBuilder(pricingCardsArray[i]);
-      pricingCardsWrapper.appendChild(builder.buildCard());
-    }
-  }
-);
+for (let i = 0; i < pricingCardsArray.length; i++) {
+  const builder = new PricingCardBuilder(pricingCardsArray[i]);
+  pricingCardsWrapper.appendChild(builder.buildCard());
+}

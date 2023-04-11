@@ -40,7 +40,7 @@ function applyMagneticEffect({ element, amplifier, transition = 200 }) {
 const anchors = document.querySelectorAll(".nav-menu a");
 
 anchors.forEach((anchor) => {
-
+  // console.log("applying");
   applyMagneticEffect({ element: anchor, amplifier: 50 });
 });
 
