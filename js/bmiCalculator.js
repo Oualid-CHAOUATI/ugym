@@ -3,15 +3,15 @@ const resultWrapper = form.querySelector(".result-wrapper");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  console.log(e);
+
   const elements = e.target.elements;
   const height = elements.inputHeight.value / 100;
   const weight = elements.inputWeight.value;
   let result = weight / (height * height);
-  console.log(result);
+
   result = result.toFixed(2);
   const resultNumber = ` <span class="result-number">${result}</span> `;
-  console.log(result);
+
 
   let message = "your BMI is" + resultNumber;
   +resultNumber;
@@ -27,5 +27,5 @@ form.addEventListener("submit", (e) => {
   }
 
   resultWrapper.innerHTML = message;
-  console.log(elements);
+
 });
