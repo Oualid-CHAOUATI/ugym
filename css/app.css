@@ -146,7 +146,6 @@ a {
 }
 
 header {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 5;
@@ -267,7 +266,7 @@ left {
 }
 
 .card {
-  padding: 1em;
+  padding: 1.5em;
   border-radius: 1em;
   display: flex;
   flex-direction: column;
@@ -408,7 +407,6 @@ left {
   position: relative;
   display: flex;
   align-items: center;
-  width: -webkit-min-content;
   width: -moz-min-content;
   width: min-content;
 }
@@ -420,9 +418,6 @@ left {
   transition: box-shadow 200ms;
 }
 .input-wrapper input::-moz-placeholder {
-  color: inherit;
-}
-.input-wrapper input:-ms-input-placeholder {
   color: inherit;
 }
 .input-wrapper input::placeholder {
@@ -514,7 +509,7 @@ footer a:not(.logo):hover {
     flex-wrap: wrap;
   }
   left,
-right {
+  right {
     width: 100%;
   }
   .section-text {
